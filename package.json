@@ -1,0 +1,24 @@
+{
+  "name": "wechat-kit",
+  "version": "0.0.9",
+  "description": "wechat sdk suit for js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeliex/wechatKit.git"
+  },
+  "keywords": [
+    "wechat",
+    "sdk",
+    "weixin"
+  ],
+  "author": "yeliex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeliex/wechat-kit/issues"
+  },
+  "homepage": "https://github.com/yeliex/wechat-kit#readme"
+}
