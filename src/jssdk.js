@@ -3,8 +3,9 @@
  * Project: wechatKit
  * Description:
  */
-(function () {
-  import Wx from '../lib/wechat';
+import Wx from '../lib/wechat';
+
+(() => {
   const defaultJSApiList = [
     'onMenuShareTimeline',
     'onMenuShareAppMessage',
@@ -159,7 +160,17 @@
       config, closeWindow, initShare
     })
   };
-  module.export = init;
-}());
+
+  if (typeof module === 'object') {
+    module.exports = init;
+  }
+  else {
+    window.Wechat = {
+      init: (...params)=> {
+        window.Wechat = init(...params);
+      }
+    }
+  }
+})();
 
 
