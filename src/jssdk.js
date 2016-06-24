@@ -3,7 +3,7 @@
  * Project: wechatKit
  * Description:
  */
-import Wx from '../lib/wechat';
+const wx = require('../lib/wechat');
 
 (() => {
   const defaultJSApiList = [
@@ -54,7 +54,7 @@ import Wx from '../lib/wechat';
 
   const config = function (callback) {
     if (!that.configured) {
-      Wx.config(that.config);
+      wx.config(that.config);
     }
     if (typeof callback === 'function') {
       wx.ready(callback);
@@ -64,7 +64,7 @@ import Wx from '../lib/wechat';
 
   const closeWindow = function () {
     config(()=> {
-      Wx.closeWindow();
+      wx.closeWindow();
     });
   };
 
@@ -72,12 +72,12 @@ import Wx from '../lib/wechat';
     const menuList = [];
 
     // hide menu items
-    Wx.hideMenuItems({
+    wx.hideMenuItems({
       menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline', 'menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:QZone']
     });
 
     target.forEach((i) => {
-      Wx[`onMenuShare${i}`]({
+      wx[`onMenuShare${i}`]({
         title,
         desc,
         link,
@@ -117,7 +117,7 @@ import Wx from '../lib/wechat';
     });
 
     // show share menu item
-    Wx.showMenuItems({ menuList });
+    wx.showMenuItems({ menuList });
   };
 
   /**
@@ -156,7 +156,7 @@ import Wx from '../lib/wechat';
 
     that.config = config;
 
-    return Object.assign({}, Wx, {
+    return Object.assign({}, wx, {
       config, closeWindow, initShare
     })
   };
@@ -172,5 +172,3 @@ import Wx from '../lib/wechat';
     }
   }
 })();
-
-
