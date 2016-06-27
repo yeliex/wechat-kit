@@ -2,7 +2,7 @@
  * Creator: yeliex
  * Project: wechat-kit
  * Description:
- */
+ */ 
 
 const webpack = require('webpack');
 

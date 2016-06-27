@@ -6,5 +6,5 @@ npm install wechat-kit
 ```
 
 ```js
-const wechat = require('wechat-kit').js(config);
+const wechat = require('wechat-kit')(config);
 ```
