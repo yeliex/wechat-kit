@@ -8,7 +8,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    jssdk: "./src/jssdk.js"
+    index: "./src/index.js"
   },
   output: {
     path: require('path').join(__dirname, '/dist'),
@@ -22,12 +22,5 @@ module.exports = {
         loaders: ["babel"]
       }
     ]
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
-  ]
+  }
 };
