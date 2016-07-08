@@ -74,7 +74,7 @@ const wx = require('../lib/wechat');
 
       // hide menu items
       wx.hideMenuItems({
-        menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline', 'menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:QZone']
+        menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline', 'menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:QZone', 'menuItem:share:facrbook']
       });
 
       target.forEach((i) => {
@@ -114,7 +114,7 @@ const wx = require('../lib/wechat');
             break;
           }
         }
-        menuList.push(`menuItem:share:facebook${i}`);
+        menuList.push(`menuItem:share:${i}`);
       });
 
       // show share menu item
