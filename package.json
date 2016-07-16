@@ -1,6 +1,6 @@
 {
   "name": "wechat-kit",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "wechat sdk suit for js",
   "main": "src/index.js",
   "scripts": {
@@ -24,11 +24,9 @@
     "url": "https://github.com/yeliex/wechat-kit/issues"
   },
   "homepage": "https://github.com/yeliex/wechat-kit#readme",
-  "dependencies": {
-    "babel": "^6.5.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
-    "node.ajax": "^2.3.8",
-    "webpack": "^1.13.1"
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0"
   }
 }
