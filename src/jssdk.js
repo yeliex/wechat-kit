@@ -52,6 +52,10 @@ const wx = require('../lib/wechat');
     configured: false
   };
 
+  let openid = null;
+  let openidProcess = false;
+  const openidCallback = [];
+
   const initial = function (callback) {
     if (!that.configured) {
       wx.config(that.config);
@@ -68,7 +72,7 @@ const wx = require('../lib/wechat');
     });
   };
 
-  const initShare = function ({title, desc, link, imgUrl, target = ['Timeline', 'AppMessage', 'QQ', 'Weibo', 'QZone'], success, cancel}) {
+  const initShare = function ({ title, desc, link, imgUrl, target = ['Timeline', 'AppMessage', 'QQ', 'Weibo', 'QZone'], success, cancel }) {
     initial(()=> {
       const menuList = [];
 
@@ -88,28 +92,23 @@ const wx = require('../lib/wechat');
         });
 
         switch (i.toLowerCase()) {
-          case 'appmessage':
-          {
+          case 'appmessage': {
             i = 'appMessage';
             break;
           }
-          case 'timeline':
-          {
+          case 'timeline': {
             i = 'timeline';
             break;
           }
-          case 'qq':
-          {
+          case 'qq': {
             i = 'qq';
             break;
           }
-          case 'weibo':
-          {
+          case 'weibo': {
             i = 'weiboApp';
             break;
           }
-          case 'qzone':
-          {
+          case 'qzone': {
             i = 'QZone';
             break;
           }
@@ -118,8 +117,87 @@ const wx = require('../lib/wechat');
       });
 
       // show share menu item
-      wx.showMenuItems({menuList});
+      wx.showMenuItems({ menuList });
     });
+  };
+
+  const getOpenid = function ({ callback, required, secret = that.config.secret, request }) {
+    if (openidProcess) {
+      typeof callback === "function" ? openidCallback.push(callback) : '';
+      return;
+    }
+
+    const doCallback = (id) => {
+      openidCallback.forEach((func)=> {
+        func(id);
+      });
+    };
+
+    const finish = (id) => {
+      openid = id;
+      doCallback(id);
+    };
+
+    if (openid) {
+      return openid;
+    } else {
+      openidProcess = true;
+
+      // 先从url参数中获取openid
+      let id = () => {
+        const param = location.href.match(/openid=(.*)&?/g);
+
+        if (param) {
+          return param[1];
+        }
+      };
+
+      if (id) {
+        finish(id);
+        return id;
+      }
+      // 参数中不存在openid
+      id = (()=> {
+        const param = location.href.match(/code=(.*)&?/g);
+
+        if (param) {
+          const code = param[1];
+
+          // 根据code从服务器获取openid
+          if (secret) {
+            // 从微信服务器直接获取
+            const req = $.ajax(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${that.config.appId}&secret=${secret}&code=${code}&grant_type=authorization_code`)
+            if (req.openid) {
+              finish(req.openid);
+              return req.openid;
+            }
+          } else if (typeof request === 'function') {
+            // 从自定义url获取 (避免暴露secret)
+            const id = request(code);
+            finish(id);
+            return id;
+          } else {
+            alert('获取openid失败');
+            closeWindow();
+            throw 'require secret or request should be function';
+          }
+        } else {
+          if (required) {
+            alert('获取openid失败');
+            closeWindow();
+            throw 'code cannot find';
+          }
+        }
+      })();
+
+      if (!id) {
+        alert('获取openid失败');
+        closeWindow();
+        throw 'unknown error';
+      }
+
+      return id;
+    }
   };
 
   /**
@@ -150,7 +228,7 @@ const wx = require('../lib/wechat');
       throw 'wechat js sdk config must be object or url';
     }
 
-    const {appId, timestamp, nonceStr, signature, jsApiList} = params;
+    const { appId, timestamp, nonceStr, signature, jsApiList } = params;
 
     if (!appId || !timestamp || !nonceStr || !signature) {
       throw 'params error';
