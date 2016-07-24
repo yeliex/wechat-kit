@@ -214,9 +214,7 @@ const wx = require('../lib/wechat');
     }
 
     if (typeof params === 'string') {
-      const request = $.ajax(params, 'GET', {
-        origin: location.href
-      });
+      const request = $.ajax(params);
       if (typeof callback === 'function') {
         params = callback(request);
       } else {
