@@ -166,7 +166,7 @@ const wx = require('../lib/wechat');
           // 根据code从服务器获取openid
           if (secret) {
             // 从微信服务器直接获取
-            const req = $.ajax(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${that.config.appId}&secret=${secret}&code=${code}&grant_type=authorization_code`)
+            const req = $.ajax(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${that.config.appId}&secret=${secret}&code=${code}&grant_type=authorization_code`);
             if (req.openid) {
               finish(req.openid);
               return req.openid;
@@ -214,7 +214,9 @@ const wx = require('../lib/wechat');
     }
 
     if (typeof params === 'string') {
-      const request = $.ajax(params);
+      const request = $.ajax(params, 'GET', {
+        origin: location.href
+      });
       if (typeof callback === 'function') {
         params = callback(request);
       } else {
