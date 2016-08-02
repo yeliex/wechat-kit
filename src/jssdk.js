@@ -247,7 +247,8 @@ const wx = require('../lib/wechat');
 
     return Object.assign({}, wx, {
       config, closeWindow, initShare,
-      init: initial
+      init: initial,
+      getOpenid
     })
   };
 
