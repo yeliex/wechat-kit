@@ -144,13 +144,13 @@ const wx = require('../lib/wechat');
       openidProcess = true;
 
       // 先从url参数中获取openid
-      let id = () => {
+      let id = (() => {
         const param = location.href.match(/openid=(.*)&?/g);
 
         if (param) {
           return param[1];
         }
-      };
+      })();
 
       if (id) {
         finish(id);
