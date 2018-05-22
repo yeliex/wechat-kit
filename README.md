@@ -1,4 +1,6 @@
 # wechatKit
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/yeliex/wechat-kit.svg)](https://greenkeeper.io/)
 wechat sdk suit for js
 
 ```bash
